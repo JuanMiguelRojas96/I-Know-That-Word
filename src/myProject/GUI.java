@@ -11,8 +11,10 @@ import java.awt.*;
 public class GUI extends JFrame {
 
     private Header headerProject;
-    private JPanel panelPrincipal;
+    private JPanel panelPrincipal, panelUserName;
+    private JTextField textField;
     private ImageIcon background;
+    private JLabel label;
     private Image image;
 
 
@@ -55,15 +57,53 @@ public class GUI extends JFrame {
 
         panelPrincipal = new PanelImageFondo(setImageBackground("/resources/FondoPanel.jpg"));
         panelPrincipal.setName("panelPrincipal");
-        panelPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER));
-
         panelPrincipal.setPreferredSize(new Dimension(1080,675));
+        panelPrincipal.setLayout(new GridBagLayout());
         constraints.gridx=0;
         constraints.gridy=1;
         constraints.gridwidth=2;
         constraints.fill=GridBagConstraints.CENTER;
         constraints.anchor=GridBagConstraints.CENTER;
         this.add(panelPrincipal,constraints);
+
+        panelUserName = new JPanel();
+        panelUserName.setName("panelUserName");
+        panelUserName.setLayout(new GridBagLayout());
+        panelUserName.setPreferredSize(new Dimension(300,200));
+        panelUserName.setBorder(BorderFactory.createLineBorder(new Color(255,166,74),5));
+        panelUserName.setBackground(new Color(243,121,46));
+        constraints.gridx=0;
+        constraints.gridy=0;
+        constraints.fill = GridBagConstraints.CENTER;
+        constraints.weightx=1.0;
+        constraints.weighty=1.0;
+        panelPrincipal.add(panelUserName,constraints);
+
+
+        label = new JLabel("Escribe Tu Nombre");
+        label.setFont(new Font("Comic Sans MS", Font.BOLD,20));
+        label.setForeground(new Color(255,255,255));
+        constraints.gridx=0;
+        constraints.gridy=0;
+        constraints.fill= GridBagConstraints.CENTER;
+        panelUserName.add(label,constraints);
+
+
+        textField = new JTextField(20);
+        textField.setPreferredSize(new Dimension(150,50));
+        textField.setBackground(new Color(255,166,74));
+        textField.setFont(new Font("Comic Sans MS",Font.BOLD,15));
+        textField.setForeground(Color.WHITE);
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        constraints.gridx=0;
+        constraints.gridy=1;
+        constraints.fill= GridBagConstraints.CENTER;
+        constraints.weightx=1;
+        panelUserName.add(textField,constraints);
+
+
+
     }
 
 
