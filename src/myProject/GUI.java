@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.EventListener;
 
 /**
@@ -111,8 +112,6 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelUserName.add(textField,constraints);
 
-
-
     }
 
 
@@ -138,9 +137,19 @@ public class GUI extends JFrame {
     private class Escucha implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            fileManager.writer(textField.getText());
-            textField.setText("");
-
+            if (e.getSource() == textField){
+                if(fileManager.reader().contains(textField.getText().toUpperCase()+" ") == true){
+                    JOptionPane.showMessageDialog(null,"Ya Existe un Usuario con este Nombre","Usuario Existente",JOptionPane.INFORMATION_MESSAGE);
+                    textField.setText("");
+                } else if (textField.getText().contains(" ") || textField.getText().isEmpty() || textField.getText() == null) {
+                    JOptionPane.showMessageDialog(null,"Ingrese un usuario válido y que no contenga espacios","Usuario Inválido",JOptionPane.INFORMATION_MESSAGE);
+                    textField.setText("");
+                }else{
+                    fileManager.writer(textField.getText().toUpperCase()+" ");
+                    textField.setText("");
+                    panelUserName.setVisible(false);
+                }
+            }
         }
     }
 }
