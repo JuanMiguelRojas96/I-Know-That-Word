@@ -2,6 +2,11 @@ package myProject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.EventListener;
 
 /**
  * This class is used for ...
@@ -13,6 +18,8 @@ public class GUI extends JFrame {
     private Header headerProject;
     private JPanel panelPrincipal, panelUserName;
     private JTextField textField;
+    private Escucha escucha;
+    private FileManager fileManager;
     private ImageIcon background;
     private JLabel label;
     private Image image;
@@ -45,6 +52,8 @@ public class GUI extends JFrame {
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         //Create Listener Object and Control Object
+        escucha = new Escucha();
+        fileManager = new FileManager();
         //Set up JComponents
         headerProject = new Header("I Know That Word", new Color(54,133,140));
         constraints.gridx=0;
@@ -90,6 +99,7 @@ public class GUI extends JFrame {
 
 
         textField = new JTextField(20);
+        textField.addActionListener(escucha);
         textField.setPreferredSize(new Dimension(150,50));
         textField.setBackground(new Color(255,166,74));
         textField.setFont(new Font("Comic Sans MS",Font.BOLD,15));
@@ -101,8 +111,6 @@ public class GUI extends JFrame {
         constraints.fill= GridBagConstraints.CENTER;
         constraints.weightx=1;
         panelUserName.add(textField,constraints);
-
-
 
     }
 
@@ -126,7 +134,22 @@ public class GUI extends JFrame {
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha {
-
+    private class Escucha implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == textField){
+                if(fileManager.reader().contains(textField.getText().toUpperCase()+" ") == true){
+                    JOptionPane.showMessageDialog(null,"Ya Existe un Usuario con este Nombre","Usuario Existente",JOptionPane.INFORMATION_MESSAGE);
+                    textField.setText("");
+                } else if (textField.getText().contains(" ") || textField.getText().isEmpty() || textField.getText() == null) {
+                    JOptionPane.showMessageDialog(null,"Ingrese un usuario válido y que no contenga espacios","Usuario Inválido",JOptionPane.INFORMATION_MESSAGE);
+                    textField.setText("");
+                }else{
+                    fileManager.writer(textField.getText().toUpperCase()+" ");
+                    textField.setText("");
+                    panelUserName.setVisible(false);
+                }
+            }
+        }
     }
 }
