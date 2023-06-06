@@ -2,11 +2,7 @@ package myProject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.util.EventListener;
+import java.awt.event.*;
 
 /**
  * This class is used for ...
@@ -20,11 +16,12 @@ public class GUI extends JFrame {
     private JTextField textField;
     private Escucha escucha;
     private FileManager fileManager;
+    private ModelIKnowThatWord modelIKnowThatWord;
     private ImageIcon background;
-    private JLabel label;
+    private JLabel label, palabras,segundos;
     private Image image;
-    private int option;
-    private JButton registrarse,iniciarSesion,volver;
+    private int option,level;
+    private JButton registrarse,iniciarSesion,volver,iniciarNivel;
 
 
 
@@ -67,6 +64,7 @@ public class GUI extends JFrame {
         //Create Listener Object and Control Object
         escucha = new Escucha();
         fileManager = new FileManager();
+        modelIKnowThatWord = new ModelIKnowThatWord();
         //Set up JComponents
         headerProject = new Header("I Know That Word", new Color(54,133,140));
         setGridBagLayout(headerProject,this.getContentPane(),0,0,3,1,GridBagConstraints.HORIZONTAL,GridBagConstraints.CENTER);
@@ -77,6 +75,26 @@ public class GUI extends JFrame {
         panelPrincipal.setPreferredSize(new Dimension(1080,600));
         panelPrincipal.setLayout(new GridBagLayout());
         setGridBagLayout(panelPrincipal,this.getContentPane(),0,1,3,1,GridBagConstraints.CENTER,GridBagConstraints.CENTER);
+
+        palabras = new JLabel();
+        palabras.setFont(new Font("Comic Sans MS", Font.BOLD,60));
+        palabras.setForeground(new Color(255,255,255));
+        palabras.setBackground(new Color(54,133,140));
+        palabras.setOpaque(true);
+        palabras.setVisible(false);
+        constraints.gridx=0;
+        constraints.gridy=0;
+        constraints.fill= GridBagConstraints.CENTER;
+        panelPrincipal.add(palabras,constraints);
+
+        segundos = new JLabel("Tiempo");
+        segundos.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC,40));
+        segundos.setForeground(new Color(255,255,255));
+        segundos.setVisible(false);
+        constraints.gridx=0;
+        constraints.gridy=1;
+        constraints.fill= GridBagConstraints.CENTER;
+        panelPrincipal.add(segundos,constraints);
 
 
         panelLogin = new JPanel();
@@ -156,6 +174,19 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelUserName.add(volver,constraints);
 
+        iniciarNivel = new JButton("Iniciar");
+        iniciarNivel.addActionListener(escucha);
+        iniciarNivel.setBackground(new Color(255,166,74));
+        iniciarNivel.setFont(new Font("Comic Sans MS",Font.BOLD,15));
+        iniciarNivel.setForeground(Color.WHITE);
+        constraints.gridx=0;
+        constraints.gridy=2;
+        constraints.fill= GridBagConstraints.CENTER;
+        constraints.weightx=1;
+        iniciarNivel.setVisible(false);
+        panelUserName.add(iniciarNivel,constraints);
+
+
         nivelEnd = new Header("Nivel: 1",new Color(54,133,140));
         setGridBagLayout(nivelEnd,this.getContentPane(),0,2,3,1,GridBagConstraints.HORIZONTAL,GridBagConstraints.CENTER);
     }
@@ -176,13 +207,55 @@ public class GUI extends JFrame {
         image = background.getImage();
         return image;
     }
+    public void verificacionRegistro(){
+        if(fileManager.reader().contains(textField.getText().toUpperCase()+" ") == true){
+            JOptionPane.showMessageDialog(null,"Ya Existe un Usuario con este Nombre","Usuario Existente",JOptionPane.INFORMATION_MESSAGE);
+            textField.setText("");
+        } else if (textField.getText().contains(" ") || textField.getText().isEmpty() || textField.getText() == null) {
+            JOptionPane.showMessageDialog(null,"Ingrese un usuario válido y que no contenga espacios","Usuario Inválido",JOptionPane.INFORMATION_MESSAGE);
+            textField.setText("");
+        }else{
+            fileManager.writer(textField.getText().toUpperCase()+" Nivel1");
+            level = 1;
+            nivelEnd.setText("Nivel: "+level);
+            textField.setText("");
+            panelUserName.remove(textField);
+            label.setText("Comenzar Nivel: "+level);
+            iniciarNivel.setVisible(true);
+            volver.setVisible(false);
+            panelUserName.repaint();
+            nivelEnd.repaint();
+            nivelEnd.revalidate();
+        }
+    }
+
+    public void verificacionInicioSesion(){
+        if (fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") != -1){
+            String nivel = String.valueOf(fileManager.reader().charAt(fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 6 ));
+            nivel += String.valueOf(fileManager.reader().charAt(fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 7 ));
+            nivelEnd.setText("Nivel: "+nivel);
+            nivel = nivel.trim();
+            level = Integer.parseInt(nivel);
+            panelUserName.remove(textField);
+            label.setText("Comenzar Nivel: "+nivel);
+            iniciarNivel.setVisible(true);
+            volver.setVisible(false);
+            panelUserName.repaint();
+            nivelEnd.repaint();
+            nivelEnd.revalidate();
+        }else{
+            JOptionPane.showMessageDialog(null,"Por Favor Registrese","Usuario No Existe",JOptionPane.INFORMATION_MESSAGE);
+            textField.setText("");
+        }
+    }
 
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha implements ActionListener {
+    private class Escucha implements ActionListener, MouseListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if (e.getSource() == registrarse){
                 panelUserName.setVisible(true);
                 panelLogin.setVisible(false);
@@ -194,32 +267,41 @@ public class GUI extends JFrame {
             } else if (e.getSource() == volver) {
                 panelUserName.setVisible(false);
                 panelLogin.setVisible(true);
+                textField.setText("");
+            }else if (e.getSource() == iniciarNivel){
+                panelUserName.setVisible(false);
+                modelIKnowThatWord.showWords(level,palabras,segundos);
             }
             if (e.getSource() == textField && option == 1){
-                if(fileManager.reader().contains(textField.getText().toUpperCase()+" ") == true){
-                    JOptionPane.showMessageDialog(null,"Ya Existe un Usuario con este Nombre","Usuario Existente",JOptionPane.INFORMATION_MESSAGE);
-                    textField.setText("");
-                } else if (textField.getText().contains(" ") || textField.getText().isEmpty() || textField.getText() == null) {
-                    JOptionPane.showMessageDialog(null,"Ingrese un usuario válido y que no contenga espacios","Usuario Inválido",JOptionPane.INFORMATION_MESSAGE);
-                    textField.setText("");
-                }else{
-                    fileManager.writer(textField.getText().toUpperCase()+" Nivel1");
-                    textField.setText("");
-                    panelUserName.setVisible(false);
-                }
+                verificacionRegistro();
             } else if (e.getSource()==textField && option == 2) {
-                if (fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") != -1){
-                    String nivel = String.valueOf(fileManager.reader().charAt(fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 6 ));
-                    nivel += String.valueOf(fileManager.reader().charAt(fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 7 ));
-                    nivelEnd.setText("Nivel: "+nivel);
-                    panelUserName.setVisible(false);
-                    nivelEnd.repaint();
-                    nivelEnd.revalidate();
-                }else{
-                    JOptionPane.showMessageDialog(null,"Por Favor Registrese","Usuario No Existe",JOptionPane.INFORMATION_MESSAGE);
-                    textField.setText("");
-                }
+                verificacionInicioSesion();
             }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
         }
     }
 }
