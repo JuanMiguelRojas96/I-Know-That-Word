@@ -13,7 +13,8 @@ import java.util.Random;
 public class ModelIKnowThatWord {
 private FileManager fileManager;
 private ArrayList<String> words;
-private int index;
+private int index,secondsPassed;
+private String word;
 
 
   public ModelIKnowThatWord(){
@@ -153,23 +154,48 @@ private int index;
     return wordsToShow;
   }
 
-  public void showWords(int level){
+  public void showWords(int level, JLabel labelWord,JLabel labelSeconds){
     List<String> wordsToShow = levelWords(level);
-    Timer timer = new Timer(7000,null);
+    Timer timer = new Timer(5000,null);
+    Timer seconds = new Timer(1000,null);
+    timer.setInitialDelay(0);
     timer.start();
-    System.out.println(wordsToShow);
-    ActionListener escucha = new ActionListener() {
+    seconds.setInitialDelay(0);
+    seconds.start();
+    ActionListener wordListener = new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         if(index < wordsToShow.size()){
-          String word = wordsToShow.get(index);
-          System.out.println(word);
+          word = wordsToShow.get(index).toUpperCase();
+          System.out.println("PALABRA: "+(index+1));
+          labelWord.setVisible(true);
+          labelWord.setText(word);
+          labelWord.repaint();
           index++;
         }else{
           ((Timer) e.getSource()).stop();
         }
       }
     };
-    timer.addActionListener(escucha);
+    ActionListener secondsListener = new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if(timer.isRunning()==true){
+          secondsPassed++;
+          if (secondsPassed > 5){
+            secondsPassed = 1;
+          }
+          labelSeconds.setVisible(true);
+          labelSeconds.setText("Tiempo: "+ secondsPassed);
+          labelSeconds.repaint();
+        }else{
+          ((Timer) e.getSource()).stop();
+          labelSeconds.setVisible(false);
+          labelWord.setVisible(false);
+        }
+      }
+    };
+    timer.addActionListener(wordListener);
+    seconds.addActionListener(secondsListener);
   }
 }

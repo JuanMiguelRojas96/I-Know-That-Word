@@ -18,7 +18,7 @@ public class GUI extends JFrame {
     private FileManager fileManager;
     private ModelIKnowThatWord modelIKnowThatWord;
     private ImageIcon background;
-    private JLabel label;
+    private JLabel label, palabras,segundos;
     private Image image;
     private int option,level;
     private JButton registrarse,iniciarSesion,volver,iniciarNivel;
@@ -75,6 +75,26 @@ public class GUI extends JFrame {
         panelPrincipal.setPreferredSize(new Dimension(1080,600));
         panelPrincipal.setLayout(new GridBagLayout());
         setGridBagLayout(panelPrincipal,this.getContentPane(),0,1,3,1,GridBagConstraints.CENTER,GridBagConstraints.CENTER);
+
+        palabras = new JLabel();
+        palabras.setFont(new Font("Comic Sans MS", Font.BOLD,60));
+        palabras.setForeground(new Color(255,255,255));
+        palabras.setBackground(new Color(54,133,140));
+        palabras.setOpaque(true);
+        palabras.setVisible(false);
+        constraints.gridx=0;
+        constraints.gridy=0;
+        constraints.fill= GridBagConstraints.CENTER;
+        panelPrincipal.add(palabras,constraints);
+
+        segundos = new JLabel("Tiempo");
+        segundos.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC,40));
+        segundos.setForeground(new Color(255,255,255));
+        segundos.setVisible(false);
+        constraints.gridx=0;
+        constraints.gridy=1;
+        constraints.fill= GridBagConstraints.CENTER;
+        panelPrincipal.add(segundos,constraints);
 
 
         panelLogin = new JPanel();
@@ -250,12 +270,12 @@ public class GUI extends JFrame {
                 textField.setText("");
             }else if (e.getSource() == iniciarNivel){
                 panelUserName.setVisible(false);
+                modelIKnowThatWord.showWords(level,palabras,segundos);
             }
             if (e.getSource() == textField && option == 1){
                 verificacionRegistro();
             } else if (e.getSource()==textField && option == 2) {
                 verificacionInicioSesion();
-                System.out.println(level);
             }
         }
 
