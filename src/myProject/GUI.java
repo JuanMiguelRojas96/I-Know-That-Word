@@ -290,9 +290,7 @@ public class GUI extends JFrame {
                 textField.setText("");
             }else if (e.getSource() == iniciarNivel){
                 panelUserName.setVisible(false);
-                optionSi.setVisible(true);
-                optionNo.setVisible(true);
-                modelIKnowThatWord.showWords(level,palabras,segundos);
+                modelIKnowThatWord.showWords(level,palabras,segundos,optionSi,optionNo);
             }
             if (e.getSource() == textField && option == 1){
                 verificacionRegistro();
