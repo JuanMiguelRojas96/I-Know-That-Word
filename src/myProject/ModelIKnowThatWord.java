@@ -165,7 +165,7 @@ private String word;
     return wordsToShow;
   }
 
-  public void showWords(int level, JLabel labelWord,JLabel labelSeconds){
+  public void showWords(int level, JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo){
     wordsToShow = (ArrayList<String>) levelWords(level);
     Timer timer = new Timer(5000,null);
     Timer seconds = new Timer(1000,null);
@@ -203,14 +203,16 @@ private String word;
           ((Timer) e.getSource()).stop();
           labelSeconds.setVisible(false);
           labelWord.setText("¡PREPARATE!");
-          showLevelWords(wordsLevel,wordsToShow,labelWord,labelSeconds);
+          showLevelWords(wordsLevel,wordsToShow,labelWord,labelSeconds,optionSi,optionNo);
         }
       }
     };
     timer.addActionListener(wordListener);
     seconds.addActionListener(secondsListener);
   }
-  public void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds) {
+  public void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo) {
+    optionSi.setVisible(true);
+    optionNo.setVisible(true);
     System.out.println(wordsLevel);
     Timer timer = new Timer(7000,null);
     Timer seconds = new Timer(1000,null);

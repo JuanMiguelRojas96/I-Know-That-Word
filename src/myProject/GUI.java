@@ -21,7 +21,7 @@ public class GUI extends JFrame {
     private JLabel label, palabras,segundos;
     private Image image;
     private int option,level;
-    private JButton registrarse,iniciarSesion,volver,iniciarNivel;
+    private JButton registrarse,iniciarSesion,volver,iniciarNivel,optionSi,optionNo;
 
 
 
@@ -76,22 +76,42 @@ public class GUI extends JFrame {
         panelPrincipal.setLayout(new GridBagLayout());
         setGridBagLayout(panelPrincipal,this.getContentPane(),0,1,3,1,GridBagConstraints.CENTER,GridBagConstraints.CENTER);
 
+        optionSi = new JButton("SI");
+        optionSi.addActionListener(escucha);
+        optionSi.setBackground(new Color(255,166,74));
+        optionSi.setFont(new Font("Comic Sans MS",Font.BOLD,30));
+        optionSi.setForeground(Color.WHITE);
+        optionSi.setVisible(false);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panelPrincipal.add(optionSi,constraints);
+
+
         palabras = new JLabel();
         palabras.setFont(new Font("Comic Sans MS", Font.BOLD,60));
         palabras.setForeground(new Color(255,255,255));
         palabras.setBackground(new Color(54,133,140));
         palabras.setOpaque(true);
         palabras.setVisible(false);
-        constraints.gridx=0;
-        constraints.gridy=0;
-        constraints.fill= GridBagConstraints.CENTER;
+        constraints.gridx = 1;
+        constraints.gridy = 0;
         panelPrincipal.add(palabras,constraints);
+
+        optionNo = new JButton("NO");
+        optionNo.addActionListener(escucha);
+        optionNo.setBackground(new Color(255,166,74));
+        optionNo.setFont(new Font("Comic Sans MS",Font.BOLD,30));
+        optionNo.setForeground(Color.WHITE);
+        optionNo.setVisible(false);
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        panelPrincipal.add(optionNo,constraints);
 
         segundos = new JLabel("Tiempo");
         segundos.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC,40));
         segundos.setForeground(new Color(255,255,255));
         segundos.setVisible(false);
-        constraints.gridx=0;
+        constraints.gridx=1;
         constraints.gridy=1;
         constraints.fill= GridBagConstraints.CENTER;
         panelPrincipal.add(segundos,constraints);
@@ -270,7 +290,7 @@ public class GUI extends JFrame {
                 textField.setText("");
             }else if (e.getSource() == iniciarNivel){
                 panelUserName.setVisible(false);
-                modelIKnowThatWord.showWords(level,palabras,segundos);
+                modelIKnowThatWord.showWords(level,palabras,segundos,optionSi,optionNo);
             }
             if (e.getSource() == textField && option == 1){
                 verificacionRegistro();
