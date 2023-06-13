@@ -89,4 +89,18 @@ public class FileManager {
    }
    return randomWords;
   }
+  public void deleteFileContent() {
+    try {
+      fileWriter = new FileWriter("src/resources/Users.txt");
+      fileWriter.write(""); // Escribe una cadena vacía para borrar el contenido
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        fileWriter.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 }

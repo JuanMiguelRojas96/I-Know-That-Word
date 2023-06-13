@@ -20,7 +20,7 @@ public class GUI extends JFrame {
     private ImageIcon background;
     private JLabel label, palabras,segundos;
     private Image image;
-    private int option,level;
+    private int option,level,indiceNivel,indiceUsuario;
     private JButton registrarse,iniciarSesion,volver,iniciarNivel,optionSi,optionNo;
 
 
@@ -256,8 +256,11 @@ public class GUI extends JFrame {
             nivelEnd.setText("Nivel: "+nivel);
             nivel = nivel.trim();
             level = Integer.parseInt(nivel);
+            indiceNivel = fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 6;
+            indiceUsuario = fileManager.reader().indexOf(textField.getText().toUpperCase()+" ");
             panelUserName.remove(textField);
             label.setText("Comenzar Nivel: "+nivel);
+            palabras.setText("¡PREPARATE!");
             iniciarNivel.setVisible(true);
             volver.setVisible(false);
             panelUserName.repaint();
@@ -272,7 +275,7 @@ public class GUI extends JFrame {
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha implements ActionListener, MouseListener {
+    private class Escucha implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -290,38 +293,13 @@ public class GUI extends JFrame {
                 textField.setText("");
             }else if (e.getSource() == iniciarNivel){
                 panelUserName.setVisible(false);
-                modelIKnowThatWord.showWords(level,palabras,segundos,optionSi,optionNo);
+                modelIKnowThatWord.showWords(level,nivelEnd,indiceUsuario,indiceNivel,palabras,segundos,optionSi,optionNo,panelUserName);
             }
             if (e.getSource() == textField && option == 1){
                 verificacionRegistro();
             } else if (e.getSource()==textField && option == 2) {
                 verificacionInicioSesion();
             }
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
         }
     }
 }

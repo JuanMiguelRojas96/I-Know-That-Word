@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +14,7 @@ import java.util.Random;
 public class ModelIKnowThatWord {
 private FileManager fileManager;
 private ArrayList<String> words,wordsLevel,wordsToShow;
-private int index,secondsPassed,correct,error;
+private int index,secondsPassed,correct,nivel,indexUsuario,indexNivel;
 private float promedio;
 private String word;
 
@@ -25,8 +26,8 @@ private String word;
     wordsLevel = new ArrayList<>();
     wordsToShow = new ArrayList<>();
     correct = 0;
-    error = 0;
     promedio = 0;
+    nivel = 0;
   }
 
   private List<String> levelWords(int level){
@@ -169,13 +170,18 @@ private String word;
     return wordsToShow;
   }
 
-  public void showWords(int level, JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo){
+  public void showWords(int level,JLabel labelEnd,int indiceUsuario,int indiceNivel, JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo,JPanel panelUserName){
+    labelWord.setVisible(true);
+    System.out.println(level);
+    nivel = level;
+    indexUsuario = indiceUsuario;
+    indexNivel = indiceNivel;
     wordsToShow = (ArrayList<String>) levelWords(level);
     Timer timer = new Timer(3000,null); //cambie eran 5000
     Timer seconds = new Timer(1000,null);
-    timer.setInitialDelay(0);
+    timer.setInitialDelay(3000);
     timer.start();
-    seconds.setInitialDelay(0);
+    seconds.setInitialDelay(3000);
     seconds.start();
     ActionListener wordListener = new ActionListener() {
       @Override
@@ -206,17 +212,17 @@ private String word;
           seconds.stop();
           labelSeconds.setVisible(false);
           labelWord.setText("¡PREPARATE!");
-          showLevelWords(wordsLevel,wordsToShow,labelWord,labelSeconds,optionSi,optionNo);
+          showLevelWords(wordsLevel,wordsToShow,labelWord,labelSeconds,labelEnd,optionSi,optionNo,panelUserName);
         }
       }
     };
     timer.addActionListener(wordListener);
     seconds.addActionListener(secondsListener);
   }
-  public void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo) {
+  private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds,JLabel labelEnd,JButton optionSi, JButton optionNo,JPanel panelUserName) {
     System.out.println(wordsLevel);
     System.out.println(wordsToShow);
-    Timer timer = new Timer(3000,null); //cambio eran 7000
+    Timer timer = new Timer(5000,null); //cambio eran 7000
     Timer seconds = new Timer(1000,null);
     timer.setInitialDelay(3000);
     timer.start();
@@ -250,7 +256,6 @@ private String word;
             labelWord.setForeground(new Color(64, 222, 19));
             labelWord.setText("¡CORRECTO!");
           }else{
-            error += 1;
             labelWord.setForeground(new Color(255, 0, 0));
             labelWord.setText("¡ERROR!");
           }
@@ -263,7 +268,6 @@ private String word;
             labelWord.setForeground(new Color(64, 222, 19));
             labelWord.setText("¡CORRECTO!");
           }else{
-            error += 1;
             labelWord.setForeground(new Color(255, 0, 0));
             labelWord.setText("¡ERROR!");
           }
@@ -275,16 +279,13 @@ private String word;
       public void actionPerformed(ActionEvent e) {
         if(timer.isRunning()==true){
           secondsPassed++;
-          if (secondsPassed > 3){
+          if (secondsPassed > 5){  //Cambio, eran 7
             secondsPassed = 1;
           }
           labelSeconds.setVisible(true);
           labelSeconds.setText("Tiempo: "+ secondsPassed);
           labelSeconds.repaint();
           promedio = ((float) correct/wordsLevel.size())*100;
-          System.out.println(correct);
-          System.out.println(wordsLevel.size());
-          System.out.println((int)promedio);
         }else{
           seconds.stop();
           labelWord.setForeground(new Color(255, 255, 255));
@@ -292,6 +293,9 @@ private String word;
           labelWord.setText("Porcentaje Correctas: " + (int)promedio +"%");
           optionSi.setVisible(false);
           optionNo.setVisible(false);
+          System.out.println(correct);
+          System.out.println((int)promedio);
+          checkPasoNivel(nivel,labelEnd,(int)promedio,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
         }
       }
     };
@@ -299,6 +303,33 @@ private String word;
     optionSi.addActionListener(wordListener);
     optionNo.addActionListener(wordListener);
     seconds.addActionListener(secondsListener);
+  }
+
+  private void checkPasoNivel(int level,JLabel labelEnd,int promedio,JLabel labelWord,JLabel labelSeconds,JButton optionSi,JButton optionNo,JPanel panelUserName){
+    switch (level){
+      case 1:
+        if(promedio < 70){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 70%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+    }
+  }
+
+  private void cambiarNivel(int indexUsuario,int indexNivel){
+    String parte1 = fileManager.reader().substring(indexUsuario,indexNivel);
+    String nuevoTexto = parte1 + nivel;
+    String nuevoContenido = fileManager.reader().substring(0,indexUsuario)+nuevoTexto+fileManager.reader().substring(indexNivel+1);
+    fileManager.deleteFileContent();
+    fileManager.writer(nuevoContenido);
   }
 }
 
