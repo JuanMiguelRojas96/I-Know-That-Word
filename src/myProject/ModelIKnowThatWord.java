@@ -321,6 +321,142 @@ private String word;
           labelEnd.repaint();
           labelEnd.revalidate();
         }
+        break;
+      case 2:
+        if(promedio < 70){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 70%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 3:
+        if(promedio < 75){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 75%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 4:
+        if(promedio < 80){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 80%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 5:
+        if(promedio < 80){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 80%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 6:
+        if(promedio < 85){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 85%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 7:
+        if(promedio < 90){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 90%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 8:
+        if(promedio < 90){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 90%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 9:
+        if(promedio < 95){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 95%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
+      case 10:
+        if(promedio < 100){
+          JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 100%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
+          panelUserName.setVisible(true);
+          labelWord.setVisible(false);
+          labelSeconds.setVisible(false);
+        }else{
+          nivel++;
+          cambiarNivel(indexUsuario,indexNivel);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          labelEnd.setText("Nivel: "+nivel);
+          labelEnd.repaint();
+          labelEnd.revalidate();
+        }
+        break;
     }
   }
 
