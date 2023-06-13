@@ -35,7 +35,7 @@ public class GUI extends JFrame {
         this.setTitle("I Know That Word");
         //this.setSize(200,100);
         this.pack();
-        this.setResizable(true);
+        this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,7 +169,7 @@ public class GUI extends JFrame {
         constraints.fill= GridBagConstraints.CENTER;
         panelUserName.add(label,constraints);
 
-        textField = new JTextField(20);
+        textField = new JTextField(18);
         textField.addActionListener(escucha);
         textField.setPreferredSize(new Dimension(150,50));
         textField.setBackground(new Color(255,166,74));
