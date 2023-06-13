@@ -6,12 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * La clase FileManager se utiliza para leer y escribir archivos.
+ */
 public class FileManager {
   private static FileReader fileReader;
   private static BufferedReader input;
   private FileWriter fileWriter;
   private BufferedWriter output;
 
+  /**
+   * Lee el contenido del archivo "Users.txt" y lo devuelve como un String.
+   *
+   * @return El contenido del archivo "Users.txt" como un String.
+   */
   public String reader(){
     String text = "";
 
@@ -39,7 +47,11 @@ public class FileManager {
     }
     return text;
   }
-
+  /**
+   * Escribe una línea de texto en el archivo "Users.txt".
+   *
+   * @param line La línea de texto que se va a escribir en el archivo.
+   */
   public void writer(String line){
     try{
       String text = reader();
@@ -57,6 +69,11 @@ public class FileManager {
       }
     }
   }
+  /**
+   * Lee una lista de palabras desde el archivo "Palabras.txt".
+   *
+   * @return Una lista de palabras aleatorias.
+   */
   public static List<String> readWords() {
    List<String> randomWords = new ArrayList<>();
    Random random = new Random();
@@ -89,6 +106,9 @@ public class FileManager {
    }
    return randomWords;
   }
+  /**
+   * Borra el contenido del archivo "Users.txt".
+   */
   public void deleteFileContent() {
     try {
       fileWriter = new FileWriter("src/resources/Users.txt");
