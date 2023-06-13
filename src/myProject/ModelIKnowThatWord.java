@@ -170,13 +170,16 @@ private String word;
     return wordsToShow;
   }
 
-  public void showWords(int level,JLabel labelEnd,int indiceUsuario,int indiceNivel, JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo,JPanel panelUserName){
+  public void showWords(int level,JLabel labelEnd,int indiceUsuario,int indiceNivel, JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo,JPanel panelLogin){
     labelWord.setVisible(true);
     System.out.println(level);
+    optionSi.setVisible(false);
+    optionNo.setVisible(false);
     nivel = level;
     indexUsuario = indiceUsuario;
     indexNivel = indiceNivel;
     wordsToShow = (ArrayList<String>) levelWords(level);
+    index = 0;
     Timer timer = new Timer(3000,null); //cambie eran 5000
     Timer seconds = new Timer(1000,null);
     timer.setInitialDelay(3000);
@@ -212,14 +215,14 @@ private String word;
           seconds.stop();
           labelSeconds.setVisible(false);
           labelWord.setText("¡PREPARATE!");
-          showLevelWords(wordsLevel,wordsToShow,labelWord,labelSeconds,labelEnd,optionSi,optionNo,panelUserName);
+          showLevelWords(wordsLevel,wordsToShow,labelWord,labelSeconds,labelEnd,optionSi,optionNo,panelLogin);
         }
       }
     };
     timer.addActionListener(wordListener);
     seconds.addActionListener(secondsListener);
   }
-  private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds,JLabel labelEnd,JButton optionSi, JButton optionNo,JPanel panelUserName) {
+private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds,JLabel labelEnd,JButton optionSi, JButton optionNo,JPanel panelLogin) {
     System.out.println(wordsLevel);
     System.out.println(wordsToShow);
     Timer timer = new Timer(5000,null); //cambio eran 7000
@@ -295,7 +298,7 @@ private String word;
           optionNo.setVisible(false);
           System.out.println(correct);
           System.out.println((int)promedio);
-          checkPasoNivel(nivel,labelEnd,(int)promedio,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          checkPasoNivel(nivel,labelEnd,(int)promedio,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
         }
       }
     };
@@ -305,18 +308,18 @@ private String word;
     seconds.addActionListener(secondsListener);
   }
 
-  private void checkPasoNivel(int level,JLabel labelEnd,int promedio,JLabel labelWord,JLabel labelSeconds,JButton optionSi,JButton optionNo,JPanel panelUserName){
+  private void checkPasoNivel(int level,JLabel labelEnd,int promedio,JLabel labelWord,JLabel labelSeconds,JButton optionSi,JButton optionNo,JPanel panelLogin){
     switch (level){
       case 1:
         if(promedio < 70){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 70%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -325,13 +328,13 @@ private String word;
       case 2:
         if(promedio < 70){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 70%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -340,13 +343,13 @@ private String word;
       case 3:
         if(promedio < 75){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 75%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -355,13 +358,13 @@ private String word;
       case 4:
         if(promedio < 80){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 80%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -370,13 +373,13 @@ private String word;
       case 5:
         if(promedio < 80){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 80%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -385,13 +388,13 @@ private String word;
       case 6:
         if(promedio < 85){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 85%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -400,13 +403,13 @@ private String word;
       case 7:
         if(promedio < 90){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 90%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -415,13 +418,13 @@ private String word;
       case 8:
         if(promedio < 90){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 90%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -430,13 +433,13 @@ private String word;
       case 9:
         if(promedio < 95){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 95%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
@@ -445,13 +448,13 @@ private String word;
       case 10:
         if(promedio < 100){
           JOptionPane.showMessageDialog(null,"No has logrado pasar de Nivel"+"\n"+"El mínimo para este Nivel, es 100%","Nivel No Completado",JOptionPane.INFORMATION_MESSAGE);
-          panelUserName.setVisible(true);
+          panelLogin.setVisible(true);
           labelWord.setVisible(false);
           labelSeconds.setVisible(false);
         }else{
           nivel++;
           cambiarNivel(indexUsuario,indexNivel);
-          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelUserName);
+          showWords(nivel,labelEnd,indexUsuario,indexNivel,labelWord,labelSeconds,optionSi,optionNo,panelLogin);
           labelEnd.setText("Nivel: "+nivel);
           labelEnd.repaint();
           labelEnd.revalidate();
