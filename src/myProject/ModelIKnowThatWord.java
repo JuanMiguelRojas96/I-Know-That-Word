@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Clase que representa el modelo del juego "I Know That Word".
+ */
 public class ModelIKnowThatWord {
 private FileManager fileManager;
 private ArrayList<String> words,wordsLevel,wordsToShow;
@@ -19,6 +22,11 @@ private float promedio;
 private String word;
 
 
+  /**
+   * Constructor de la clase ModelIKnowThatWord.
+   * Inicializa el objeto FileManager, la lista de palabras, las listas de palabras por nivel,
+   * y establece los valores iniciales de las variables correct, promedio y nivel.
+   */
   public ModelIKnowThatWord(){
     fileManager = new FileManager();
     words = new ArrayList<>();
@@ -30,6 +38,12 @@ private String word;
     nivel = 0;
   }
 
+  /**
+   * Genera y devuelve una lista de palabras correspondiente al nivel especificado.
+   *
+   * @param level Nivel para el cual se generarán las palabras.
+   * @return Lista de palabras del nivel especificado.
+   */
   private List<String> levelWords(int level){
     List<String> wordsCopy = new ArrayList<>();
     List<String> wordsToShow = new ArrayList<>();
@@ -170,6 +184,9 @@ private String word;
     return wordsToShow;
   }
 
+  /**
+   * Muestra las palabras correspondientes al nivel especificado.
+   */
   public void showWords(int level,JLabel labelEnd,int indiceUsuario,int indiceNivel, JLabel labelWord,JLabel labelSeconds, JButton optionSi, JButton optionNo,JPanel panelLogin){
     labelWord.setVisible(true);
     System.out.println(level);
@@ -180,13 +197,18 @@ private String word;
     indexNivel = indiceNivel;
     wordsToShow = (ArrayList<String>) levelWords(level);
     index = 0;
-    Timer timer = new Timer(3000,null); //cambie eran 5000
+    Timer timer = new Timer(5000,null);
     Timer seconds = new Timer(1000,null);
     timer.setInitialDelay(3000);
     timer.start();
     seconds.setInitialDelay(3000);
     seconds.start();
     ActionListener wordListener = new ActionListener() {
+      /**
+       * Implementación del ActionListener para el temporizador de palabras.
+       *
+       * @param e Evento de acción que desencadenó el ActionListener.
+       */
       @Override
       public void actionPerformed(ActionEvent e) {
         if(index < wordsToShow.size()){
@@ -205,7 +227,7 @@ private String word;
       public void actionPerformed(ActionEvent e) {
         if(timer.isRunning()==true){
           secondsPassed++;
-          if (secondsPassed > 3){  //cambio eran 5
+          if (secondsPassed > 5){
             secondsPassed = 1;
           }
           labelSeconds.setVisible(true);
@@ -222,10 +244,13 @@ private String word;
     timer.addActionListener(wordListener);
     seconds.addActionListener(secondsListener);
   }
+  /**
+   * Muestra las palabras del nivel actual en la interfaz gráfica y controla el tiempo y la lógica del juego.
+   */
 private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> wordsToShow,JLabel labelWord,JLabel labelSeconds,JLabel labelEnd,JButton optionSi, JButton optionNo,JPanel panelLogin) {
     System.out.println(wordsLevel);
     System.out.println(wordsToShow);
-    Timer timer = new Timer(5000,null); //cambio eran 7000
+    Timer timer = new Timer(7000,null);
     Timer seconds = new Timer(1000,null);
     timer.setInitialDelay(3000);
     timer.start();
@@ -234,6 +259,9 @@ private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> words
     index = 0;
     secondsPassed = 0;
     ActionListener wordListener = new ActionListener() {
+      /**
+       * ActionListener para controlar la lógica del juego al mostrar palabras y manejar las respuestas del jugador.
+       */
       @Override
       public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer){
@@ -277,12 +305,15 @@ private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> words
         }
       }
     };
+  /**
+   * ActionListener para controlar el tiempo transcurrido y el cálculo del porcentaje de respuestas correctas.
+   */
     ActionListener secondsListener = new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         if(timer.isRunning()==true){
           secondsPassed++;
-          if (secondsPassed > 5){  //Cambio, eran 7
+          if (secondsPassed > 7){  //Cambio, eran 7
             secondsPassed = 1;
           }
           labelSeconds.setVisible(true);
@@ -308,6 +339,9 @@ private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> words
     seconds.addActionListener(secondsListener);
   }
 
+  /**
+   * Verifica si se pasa al siguiente nivel o no en función del porcentaje de respuestas correctas.
+   */
   private void checkPasoNivel(int level,JLabel labelEnd,int promedio,JLabel labelWord,JLabel labelSeconds,JButton optionSi,JButton optionNo,JPanel panelLogin){
     switch (level){
       case 1:
@@ -463,6 +497,9 @@ private void showLevelWords(ArrayList<String> wordsLevel,ArrayList<String> words
     }
   }
 
+  /**
+   * Actualiza el nivel en el archivo de datos del usuario.
+   */
   private void cambiarNivel(int indexUsuario,int indexNivel){
     String parte1 = fileManager.reader().substring(indexUsuario,indexNivel);
     String nuevoTexto = parte1 + nivel;

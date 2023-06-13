@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * This class is used for ...
- * @autor Carlos Felipe Montoya carlos.felipe.montoya@correounivalle.edu.co
- * @version v.1.0.0 date:21/03/2023
+ * La clase GUI es una clase que extiende de JFrame y representa la interfaz gráfica de usuario del proyecto.
  */
 public class GUI extends JFrame {
 
@@ -26,7 +24,8 @@ public class GUI extends JFrame {
 
 
     /**
-     * Constructor of GUI class
+     * Constructor de la clase GUI.
+     * Inicializa la interfaz gráfica de usuario y configura la ventana JFrame.
      */
     public GUI(){
         initGUI();
@@ -42,7 +41,9 @@ public class GUI extends JFrame {
 
     }
 
-
+    /**
+     * Establece un componente en el contenedor utilizando el diseño GridBagLayout con las restricciones especificadas.
+     */
     private void setGridBagLayout(Component component,Container container,int gridx, int gridy,int gridwidth, int gridheight,int fill,int anchor){
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx=gridx;
@@ -54,28 +55,30 @@ public class GUI extends JFrame {
         container.add(component,constraints);
     }
     /**
-     * This method is used to set up the default JComponent Configuration,
-     * create Listener and control Objects used for the GUI class
+     * Inicializa la interfaz gráfica de usuario (GUI).
+     * Configura los componentes y establece su diseño utilizando el diseño GridBagLayout.
      */
     private void initGUI() {
-        //Set up JFrame Container's Layout
+        //Configuración del diseño del contenedor JFrame
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        //Create Listener Object and Control Object
+        //Creación de objetos de escucha y control
         escucha = new Escucha();
         fileManager = new FileManager();
         modelIKnowThatWord = new ModelIKnowThatWord();
-        //Set up JComponents
+        //Configuración de los componentes
+        //headerProject
         headerProject = new Header("I Know That Word", new Color(54,133,140));
         setGridBagLayout(headerProject,this.getContentPane(),0,0,3,1,GridBagConstraints.HORIZONTAL,GridBagConstraints.CENTER);
 
-
+        //panelPrincipal
         panelPrincipal = new PanelImageFondo(setImageBackground("/resources/FondoPanel.jpg"));
         panelPrincipal.setName("panelPrincipal");
         panelPrincipal.setPreferredSize(new Dimension(1080,600));
         panelPrincipal.setLayout(new GridBagLayout());
         setGridBagLayout(panelPrincipal,this.getContentPane(),0,1,3,1,GridBagConstraints.CENTER,GridBagConstraints.CENTER);
 
+        //optionSi
         optionSi = new JButton("SI");
         optionSi.addActionListener(escucha);
         optionSi.setBackground(new Color(255,166,74));
@@ -86,7 +89,7 @@ public class GUI extends JFrame {
         constraints.gridy = 0;
         panelPrincipal.add(optionSi,constraints);
 
-
+        //palabras
         palabras = new JLabel();
         palabras.setFont(new Font("Comic Sans MS", Font.BOLD,60));
         palabras.setForeground(new Color(255,255,255));
@@ -97,6 +100,7 @@ public class GUI extends JFrame {
         constraints.gridy = 0;
         panelPrincipal.add(palabras,constraints);
 
+        //optionNo
         optionNo = new JButton("NO");
         optionNo.addActionListener(escucha);
         optionNo.setBackground(new Color(255,166,74));
@@ -107,6 +111,7 @@ public class GUI extends JFrame {
         constraints.gridy = 0;
         panelPrincipal.add(optionNo,constraints);
 
+        //segundos
         segundos = new JLabel("Tiempo");
         segundos.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC,40));
         segundos.setForeground(new Color(255,255,255));
@@ -116,7 +121,7 @@ public class GUI extends JFrame {
         constraints.fill= GridBagConstraints.CENTER;
         panelPrincipal.add(segundos,constraints);
 
-
+        //panelLogin
         panelLogin = new JPanel();
         panelLogin.setName("panelLogin");
         panelLogin.setPreferredSize(new Dimension(300,200));
@@ -129,6 +134,7 @@ public class GUI extends JFrame {
         constraints.weighty=1.0;
         panelPrincipal.add(panelLogin,constraints);
 
+        //registrarse
         registrarse = new JButton("Registrarse");
         registrarse.setFont(new Font("Comic Sans MS",Font.BOLD,15));
         registrarse.setForeground(Color.WHITE);
@@ -139,6 +145,7 @@ public class GUI extends JFrame {
         constraints.fill= GridBagConstraints.CENTER;
         panelLogin.add(registrarse,constraints);
 
+        //iniciarSesion
         iniciarSesion = new JButton("Iniciar Sesión");
         iniciarSesion.setFont(new Font("Comic Sans MS",Font.BOLD,15));
         iniciarSesion.setForeground(Color.WHITE);
@@ -150,6 +157,7 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelLogin.add(iniciarSesion,constraints);
 
+        //ayuda
         ayuda = new JButton("¿Como Jugar?");
         ayuda.setFont(new Font("Comic Sans MS",Font.BOLD,15));
         ayuda.setForeground(Color.WHITE);
@@ -161,7 +169,7 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelLogin.add(ayuda,constraints);
 
-
+        //panelUserName
         panelUserName = new JPanel();
         panelUserName.setName("panelUserName");
         panelUserName.setLayout(new GridBagLayout());
@@ -171,6 +179,7 @@ public class GUI extends JFrame {
         panelUserName.setVisible(false);
         setGridBagLayout(panelUserName,panelPrincipal,0,0,1,1,GridBagConstraints.CENTER,GridBagConstraints.CENTER);
 
+        //label
         label = new JLabel("Escribe Tu Usuario");
         label.setFont(new Font("Comic Sans MS", Font.BOLD,20));
         label.setForeground(new Color(255,255,255));
@@ -179,6 +188,7 @@ public class GUI extends JFrame {
         constraints.fill= GridBagConstraints.CENTER;
         panelUserName.add(label,constraints);
 
+        //textField
         textField = new JTextField(18);
         textField.addActionListener(escucha);
         textField.setPreferredSize(new Dimension(150,50));
@@ -193,6 +203,7 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelUserName.add(textField,constraints);
 
+        //volver
         volver = new JButton("Volver");
         volver.addActionListener(escucha);
         volver.setBackground(new Color(255,166,74));
@@ -204,6 +215,7 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelUserName.add(volver,constraints);
 
+        //iniciarNivel
         iniciarNivel = new JButton("Iniciar");
         iniciarNivel.addActionListener(escucha);
         iniciarNivel.setBackground(new Color(255,166,74));
@@ -216,27 +228,42 @@ public class GUI extends JFrame {
         iniciarNivel.setVisible(false);
         panelUserName.add(iniciarNivel,constraints);
 
-
+        //nivelEnd
         nivelEnd = new Header("Nivel: 1",new Color(54,133,140));
         setGridBagLayout(nivelEnd,this.getContentPane(),0,2,3,1,GridBagConstraints.HORIZONTAL,GridBagConstraints.CENTER);
     }
 
 
     /**
-     * Main process of the Java program
-     * @param args Object used in order to send input data from command line when
-     *             the program is execute by console.
+     * Punto de entrada de la aplicación.
+     * Crea una instancia de la GUI y la inicia en el hilo de despacho de eventos.
+     *
+     * @param args Los argumentos de la línea de comandos (no se utilizan).
      */
     public static void main(String[] args){
         EventQueue.invokeLater(() -> {
             GUI miProjectGUI = new GUI();
         });
     }
+    /**
+     * Establece una imagen de fondo a partir de la URL especificada.
+     *
+     * @param url La URL de la imagen de fondo.
+     * @return La imagen de fondo establecida.
+     */
     public Image setImageBackground(String url){
         background = new ImageIcon(getClass().getResource(url));
         image = background.getImage();
         return image;
     }
+    /**
+     * Realiza la verificación del registro de un usuario.
+     * Verifica si el nombre de usuario ya existe en el archivo de usuarios.
+     * Si el usuario ya existe, muestra un mensaje de error.
+     * Si el nombre de usuario es inválido (contiene espacios o está vacío), muestra un mensaje de error.
+     * Si el nombre de usuario es válido y no existe previamente, realiza el registro.
+     * Actualiza el nivel del usuario, muestra el nivel actualizado en la interfaz y permite iniciar el nivel.
+     */
     public void verificacionRegistro(){
         if(fileManager.reader().contains(textField.getText().toUpperCase()+" ") == true){
             JOptionPane.showMessageDialog(null,"Ya Existe un Usuario con este Nombre","Usuario Existente",JOptionPane.INFORMATION_MESSAGE);
@@ -258,7 +285,12 @@ public class GUI extends JFrame {
             nivelEnd.revalidate();
         }
     }
-
+    /**
+     * Realiza la verificación del inicio de sesión de un usuario.
+     * Verifica si el nombre de usuario existe en el archivo de usuarios.
+     * Si el usuario existe, obtiene el nivel correspondiente del usuario y realiza las acciones necesarias.
+     * Si el usuario no existe, muestra un mensaje de error.
+     */
     public void verificacionInicioSesion(){
         if (fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") != -1){
             String nivel = String.valueOf(fileManager.reader().charAt(fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 6 ));
@@ -283,9 +315,15 @@ public class GUI extends JFrame {
     }
 
     /**
-     * inner class that extends an Adapter Class or implements Listeners used by GUI class
+     * Clase interna que implementa la interfaz ActionListener para manejar eventos.
      */
     private class Escucha implements ActionListener{
+        /**
+         * Método que se ejecuta cuando ocurre un evento.
+         * Realiza acciones específicas dependiendo del origen del evento.
+         *
+         * @param e El objeto ActionEvent que representa el evento.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
 
