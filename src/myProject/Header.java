@@ -3,12 +3,14 @@ package myProject;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * La clase Header extiende de JLabel y se utiliza para crear un encabezado con un título y un fondo de color personalizado.
+ */
 public class Header extends JLabel {
     /**
-     * Constructor of the Header class
-     * @param title String that contains Header text
-     * @param colorBackground Color object to be assigned for the Header background
+     * Constructor de la clase Header.
+     * @param title El título del encabezado.
+     * @param colorBackground El color de fondo del encabezado.
      */
     public Header(String title, Color colorBackground){
         this.setText(title);
