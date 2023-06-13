@@ -21,7 +21,7 @@ public class GUI extends JFrame {
     private JLabel label, palabras,segundos;
     private Image image;
     private int option,level,indiceNivel,indiceUsuario;
-    private JButton registrarse,iniciarSesion,volver,iniciarNivel,optionSi,optionNo;
+    private JButton registrarse,iniciarSesion,volver,iniciarNivel,optionSi,optionNo,ayuda;
 
 
 
@@ -150,6 +150,16 @@ public class GUI extends JFrame {
         constraints.weightx=1;
         panelLogin.add(iniciarSesion,constraints);
 
+        ayuda = new JButton("¿Como Jugar?");
+        ayuda.setFont(new Font("Comic Sans MS",Font.BOLD,15));
+        ayuda.setForeground(Color.WHITE);
+        ayuda.setBackground(new Color(255,166,74));
+        ayuda.addActionListener(escucha);
+        constraints.gridx=0;
+        constraints.gridy=2;
+        constraints.fill= GridBagConstraints.CENTER;
+        constraints.weightx=1;
+        panelLogin.add(ayuda,constraints);
 
 
         panelUserName = new JPanel();
@@ -239,9 +249,9 @@ public class GUI extends JFrame {
             level = 1;
             nivelEnd.setText("Nivel: "+level);
             textField.setText("");
-            panelUserName.remove(textField);
             label.setText("Comenzar Nivel: "+level);
             iniciarNivel.setVisible(true);
+            textField.setVisible(false);
             volver.setVisible(false);
             panelUserName.repaint();
             nivelEnd.repaint();
@@ -258,11 +268,11 @@ public class GUI extends JFrame {
             level = Integer.parseInt(nivel);
             indiceNivel = fileManager.reader().indexOf(textField.getText().toUpperCase()+" ") + textField.getText().length() + 6;
             indiceUsuario = fileManager.reader().indexOf(textField.getText().toUpperCase()+" ");
-            panelUserName.remove(textField);
             label.setText("Comenzar Nivel: "+nivel);
             palabras.setText("¡PREPARATE!");
-            iniciarNivel.setVisible(true);
+            textField.setVisible(false);
             volver.setVisible(false);
+            iniciarNivel.setVisible(true);
             panelUserName.repaint();
             nivelEnd.repaint();
             nivelEnd.revalidate();
@@ -287,13 +297,20 @@ public class GUI extends JFrame {
                 panelUserName.setVisible(true);
                 panelLogin.setVisible(false);
                 option = 2;
-            } else if (e.getSource() == volver) {
+            } else if(e.getSource() == ayuda){
+                JOptionPane.showMessageDialog(null,"Aqui van las Instrucciones ","¿Como se Juega?",JOptionPane.INFORMATION_MESSAGE);
+            }else if (e.getSource() == volver) {
                 panelUserName.setVisible(false);
                 panelLogin.setVisible(true);
                 textField.setText("");
             }else if (e.getSource() == iniciarNivel){
+                label.setText("Escribe Tu Usuario");
+                palabras.setText("¡PREPARATE!");
+                textField.setVisible(true);
+                volver.setVisible(true);
+                iniciarNivel.setVisible(false);
                 panelUserName.setVisible(false);
-                modelIKnowThatWord.showWords(level,nivelEnd,indiceUsuario,indiceNivel,palabras,segundos,optionSi,optionNo,panelUserName);
+                modelIKnowThatWord.showWords(level,nivelEnd,indiceUsuario,indiceNivel,palabras,segundos,optionSi,optionNo,panelLogin);
             }
             if (e.getSource() == textField && option == 1){
                 verificacionRegistro();
