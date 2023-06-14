@@ -8,7 +8,25 @@ import java.awt.event.*;
  * La clase GUI es una clase que extiende de JFrame y representa la interfaz gráfica de usuario del proyecto.
  */
 public class GUI extends JFrame {
-
+    public static final String MENSAJE_AYUDA = "INSTRUCCIONES DEL JUEGO:\n" +
+            "\n" +
+            "MEMORIZA LAS PALABRAS: Se te mostrará una secuencia de palabras una por una durante 5 segundos cada una." +
+            "\n"+
+            " Tu objetivo es recordarlas en orden.\n" +
+            "\n" +
+            "ELIGE LAS PALABRAS CORRECTAS: Después de la serie de palabras, se te presentará una lista con el doble de palabras." +
+            "\n"+
+            "Debes indicar cuáles de ellas estaban en la lista original que memorizaste. Tienes 7 segundos para responder.\n" +
+            "\n" +
+            "SUPERA LOS NIVELES: Comienzas en el nivel 1 y solo podrás avanzar al siguiente nivel si lo superas con éxito. " +
+            "\n" +
+            "El programa recordará tu progreso para que puedas continuar desde donde lo dejaste.\n" +
+            "\n" +
+            "MANTÉN TU MEMORIA ACTIVA: Este juego te ayuda a entrenar tu memoria episódica verbal reciente, " +
+            "\n" +
+            "lo cual es útil en situaciones donde debes recordar información que has escuchado anteriormente.\n" +
+            "\n" +
+            "¡Diviértete y desafía tu capacidad de memoria en cada nivel!";
     private Header headerProject,nivelEnd;
     private JPanel panelPrincipal, panelUserName, panelLogin;
     private JTextField textField;
@@ -19,7 +37,7 @@ public class GUI extends JFrame {
     private JLabel label, palabras,segundos;
     private Image image;
     private int option,level,indiceNivel,indiceUsuario;
-    private JButton registrarse,iniciarSesion,volver,iniciarNivel,optionSi,optionNo,ayuda;
+    private JButton registrarse,iniciarSesion,volver,iniciarNivel,optionSi,optionNo,ayuda,salir;
 
 
 
@@ -168,6 +186,18 @@ public class GUI extends JFrame {
         constraints.fill= GridBagConstraints.CENTER;
         constraints.weightx=1;
         panelLogin.add(ayuda,constraints);
+
+        //salir
+        salir = new JButton("Salir");
+        salir.setFont(new Font("Comic Sans MS",Font.BOLD,15));
+        salir.setForeground(Color.WHITE);
+        salir.setBackground(new Color(255,166,74));
+        salir.addActionListener(escucha);
+        constraints.gridx=0;
+        constraints.gridy=3;
+        constraints.fill= GridBagConstraints.CENTER;
+        constraints.weightx=1;
+        panelLogin.add(salir,constraints);
 
         //panelUserName
         panelUserName = new JPanel();
@@ -336,12 +366,15 @@ public class GUI extends JFrame {
                 panelLogin.setVisible(false);
                 option = 2;
             } else if(e.getSource() == ayuda){
-                JOptionPane.showMessageDialog(null,"Aqui van las Instrucciones ","¿Como se Juega?",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,MENSAJE_AYUDA,"¿Como se Juega?",JOptionPane.INFORMATION_MESSAGE);
             }else if (e.getSource() == volver) {
                 panelUserName.setVisible(false);
                 panelLogin.setVisible(true);
                 textField.setText("");
-            }else if (e.getSource() == iniciarNivel){
+            } else if (e.getSource() == salir) {
+                System.exit(0);
+            }
+            if (e.getSource() == iniciarNivel){
                 label.setText("Escribe Tu Usuario");
                 palabras.setText("¡PREPARATE!");
                 textField.setVisible(true);
